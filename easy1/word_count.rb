@@ -28,44 +28,16 @@
 class Phrase
   def initialize(string)
     @phrase = string
-  end
-
-  def remove_newline
-    @phrase.gsub(/\n/, ' ')
-  end
-
-  def remove_comma
-    @modified_phrase.gsub(/,/, ' ')
-  end
-
-  def remove_special_chars
-    @modified_phrase.gsub(/[^0-9a-zA-Z ']/, "")
-  end
-
-  def remove_quotations
-    result = @modified_phrase.split().map do |word|
-      if [word[0], word[-1]].all? { |char| char == "'"}
-        word[1..-2]
-      else
-        word
-      end
-    end
-
-    result.join" "
-  end
-
-  def count_words
-    result = Hash.new(0)
-    @modified_phrase.split(" ").map(&:downcase).each { |key| result[key] += 1}
-    result
+    @words_list = create_list
   end
 
   def word_count
-    @modified_phrase = remove_newline
-    @modified_phrase = remove_comma
-    @modified_phrase = remove_special_chars
-    @modified_phrase = remove_quotations
+    @words_list.each_with_object(Hash.new(0)) { |word, result| result[word] += 1 }
+  end
 
-    count_words
+  def create_list
+    @phrase.scan(/'?\w+'?\w*'?/).map(&:downcase).map do |word| 
+      word.match(/'\w+'?\w*'/) ? word[1..-2] : word
+    end
   end
 end
