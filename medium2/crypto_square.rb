@@ -69,11 +69,12 @@ class Crypto
   end
 
   def normalize_plaintext
-    @message = @message.gsub(/[^A-Za-z0-9]/, "")
+    @message = @message.gsub(/[^A-Za-z0-9]/, "").downcase
   end
 
   def plaintext_segments
-
+    binding.pry
+    @message.scan(/[A-Za-z0-9]{1,#{size}}/)
   end
 
   def ciphertext
