@@ -36,8 +36,19 @@ class Luhn
   end
 
   def self.create(number)
-    binding.pry
-    (Luhn.new(number).checksum % 10 - 10).abs
+    
+    place_holder = number.to_s.chars.push("0").join.to_i
+    luhn = Luhn.new(place_holder)
+
+    if luhn.checksum % 10 == 0
+      return luhn.number
+    else
+      check_digit = ((luhn.checksum % 10) - 10).abs.to_s
+
+      number.to_s.chars.push(check_digit).join.to_i
+    end
+      
+    
   end
 
   def addends
