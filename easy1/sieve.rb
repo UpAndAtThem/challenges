@@ -38,23 +38,26 @@ class Sieve
     prime_numbers << number
   end
 
-  def set(mark_status)
-    mark_status << 'marked'
+  def label_as_marked(marker)
+    marker << 'marked'
   end
 
   def marked?(mark_status)
     mark_status == 'marked'
   end
+  
+  def label_all_composites(number)
+    ((number + number)..upper_bound).step(number) do |composite| 
+      range_hash[composite] = 'marked'
+    end
+  end
 
   def primes
-    range_hash.each_with_index do |(number, mark_status), index|
-      next if marked? mark_status
-      push_prime(number) if mark_status.empty?
-      set mark_status
-
-      ((number + number)..upper_bound).step(number) do |composite| 
-        range_hash[composite] = 'marked'
-      end
+    range_hash.each_with_index do |(number, marker), index|
+      next if marked? marker
+      push_prime(number) if marker.empty?
+      label_as_marked marker
+      label_all_composites number
     end
 
     prime_numbers
