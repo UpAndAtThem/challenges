@@ -1,6 +1,8 @@
-#Write a program that given a phrase can count the occurrences of each word in that phrase.
+# rubocop:disable Metrics/LineLength
 
-#For example, if we count the words for the input "olly olly in come free", we should get:
+# Write a program that given a phrase can count the occurrences of each word in that phrase.
+
+# For example, if we count the words for the input "olly olly in come free", we should get:
 
 # olly: 2
 # in: 1
@@ -21,9 +23,10 @@
 
 # Phrase#word_count
 #   returns a hash with word as key, and count as value
-
 # Phrase
 #   takes in a string during instantiation
+
+# rubocop:enable Metrics/LineLength
 
 class Phrase
   def initialize(string)
@@ -32,11 +35,13 @@ class Phrase
   end
 
   def word_count
-    @words_list.each_with_object(Hash.new(0)) { |word, result| result[word] += 1 }
+    @words_list.each_with_object(Hash.new(0)) do |word, result|
+      result[word] += 1
+    end
   end
 
   def create_list
-    @phrase.scan(/'?\w+'?\w*'?/).map(&:downcase).map do |word| 
+    @phrase.scan(/'?\w+'?\w*'?/).map(&:downcase).map do |word|
       word.match(/'\w+'?\w*'/) ? word[1..-2] : word
     end
   end
