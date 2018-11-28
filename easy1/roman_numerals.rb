@@ -29,7 +29,7 @@ class Integer
         break
       end
     end
-    
+
     result
   end
 end
