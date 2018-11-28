@@ -2,7 +2,7 @@ class DNA
   attr_reader :dna_sequence
 
   def initialize(dna)
-    @dna_sequence = dna 
+    @dna_sequence = dna
   end
 
   def hamming_distance(other_genetic_makeup)
