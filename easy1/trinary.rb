@@ -1,11 +1,13 @@
-# Write a program that will convert a trinary number, represented as a string (e.g. '102012'), 
-# to its decimal equivalent using first principles (without using an existing method or library 
+# rubocop:disable Metrics/LineLength
+
+# Write a program that will convert a trinary number, represented as a string (e.g. '102012'),
+# to its decimal equivalent using first principles (without using an existing method or library
 # that can work with numeral systems).
 
-# Trinary numbers can only contain three symbols: 0, 1, and 2. Invalid trinary entries should 
+# Trinary numbers can only contain three symbols: 0, 1, and 2. Invalid trinary entries should
 # convert to decimal number 0.
 
-# The last place in a trinary number is the 1's place. The second to last is the 3's place, 
+# The last place in a trinary number is the 1's place. The second to last is the 3's place,
 # the third to last is the 9's place, etc.
 
 # # "102012"
@@ -17,6 +19,8 @@
 # map each str to int
 # map with index each num * (3 ** index)
 # reduce and return
+
+# rubocop:enable Metrics/LineLength
 
 class Trinary
   attr_reader :number
@@ -31,7 +35,7 @@ class Trinary
     reversed_integers = reversed_chars.map(&:to_i)
 
     mult_collection_by_power = reversed_integers.map.with_index do |int, index|
-      int * (3 ** index)
+      int * (3**index)
     end
 
     mult_collection_by_power.reduce(&:+)
