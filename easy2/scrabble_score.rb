@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/LineLength
+
 # Write a program that, given a word, computes the scrabble score for that word.
 
 # Letter Values
@@ -38,23 +40,27 @@
 # map over collection of letters arrays (arr of arr) to contain value of sum of letters
 # reduce return arr +
 
+# rubocop:enable Metrics/LineLength
+
 class Scrabble
   attr_reader :word
 
-  LETTERS_WORTH = {1 => %w[A E I O U L N R S T],
-                   2 => %w[D G],
-                   3 => %w[B C M P],
-                   4 => %w[F H V W Y],
-                   5 => %w[K],
-                   8 => %w[J X],
-                   10 => %w[Q Z]}
+  LETTERS_WORTH = { 1 => %w[A E I O U L N R S T],
+                    2 => %w[D G],
+                    3 => %w[B C M P],
+                    4 => %w[F H V W Y],
+                    5 => %w[K],
+                    8 => %w[J X],
+                    10 => %w[Q Z] }
 
   def initialize(word)
     @word = word
   end
 
   def get_val(letter)
-    LETTERS_WORTH.keys.each { |value| return value if LETTERS_WORTH[value].include? letter}
+    LETTERS_WORTH.keys.each do |value|
+      return value if LETTERS_WORTH[value].include? letter
+    end
   end
 
   def self.score(word)
@@ -67,14 +73,12 @@ class Scrabble
 
   def score
     return 0 if invalid_str
-    
-    grouped_letters = word.upcase.chars.group_by{ |letter| letter}.values
 
-    grouped_letters.map do |group| 
+    grouped_letters = word.upcase.chars.group_by { |letter| letter }.values
+
+    grouped_letters.map do |group|
       letter_val = get_val group[0]
       letter_val * group.length
     end.reduce(&:+)
   end
 end
-
-
