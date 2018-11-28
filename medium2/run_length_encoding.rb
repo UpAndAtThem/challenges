@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/LineLength
+
 # Implement run-length encoding and decoding.
 
 # Run-length encoding (RLE) is a simple form of data compression, where runs (consecutive data elements) are replaced by just one data value and count.
@@ -13,14 +15,13 @@
 # shift the first value and set as current_char
 # push
 # iterate over remaining chars
-  #
-  require 'pry'
+
+# rubocop:enable Metrics/LineLength
 
 class RunLengthEncoding
-  def self.encode(str)
+  def self.group_chars(str)
     grouped_chars = []
     current_chars = []
-
     char_collection = str.chars
 
     char_collection.each_with_index do |char, index|
@@ -36,21 +37,29 @@ class RunLengthEncoding
       grouped_chars << current_chars if index >= str.length - 1
     end
 
-    grouped_chars.map{ |arr| arr.size == 1 ? arr[0] : arr.size.to_s + arr[0]}.join
+    grouped_chars
+  end
+
+  def self.encode(str)
+    grouped_chars = group_chars str
+
+    grouped_chars.map do |arr|
+      arr.size == 1 ? arr[0] : arr.size.to_s + arr[0]
+    end.join
   end
 
   def self.decode(str)
     return_string = ''
 
-    pairs = str.scan(/([0-9]*)(\X)/).each do |number, unicode|
-      if number == ''
-        return_string << unicode
-      else
-        return_string << unicode * number.to_i
-      end
+    str.scan(/([0-9]*)(\X)/).each do |number, unicode|
+      return_string << if number == ''
+                         unicode
+                       else
+                         unicode * number.to_i
+                       end
+      return_string
     end
 
     return_string
   end
 end
-
