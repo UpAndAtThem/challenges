@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/LineLength, Style/TrailingWhitespace, Style/AsciiComments
+
 # Perfect Number
 # The Greek mathematician Nicomachus devised a classification scheme for natural numbers, 
 # identifying each as belonging uniquely to the categories of abundant, perfect, or deficient. 
@@ -19,19 +21,20 @@
 # OUTPUT
 #   'perfect', 'deficient', 'abundant'
 
-
 # create list of divisors from the input integer
 # add divisors together (not including self)
 # if sum equals input int return perfect
 # if sum is less than input return deficient
 # else return abundant
 
+# rubocop:enable Metrics/LineLength, Style/TrailingWhitespace, Style/AsciiComments
+
 class PerfectNumber
   require 'prime'
 
   def self.sum_divisors(int)
-    divisors = 1.upto(int - 1).with_object([]) do |possible_divisor, divisors|
-      divisors << possible_divisor if int % possible_divisor == 0
+    divisors = 1.upto(int - 1).with_object([]) do |test_divisor, divisor_list|
+      divisor_list << test_divisor if int % possible_divisor == 0
     end
 
     divisors.reduce(&:+)
@@ -51,5 +54,3 @@ class PerfectNumber
     end
   end
 end
-
-
