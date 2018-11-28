@@ -1,12 +1,12 @@
 # simulator
-  # instructions
-  # place(robot, x: val, y: val, direction: :east)
-  # evaluate(robot, 'RLAALA')
+#  -instructions
+#  -place(robot, x: val, y: val, direction: :east)
+#  -evaluate(robot, 'RLAALA')
 
 class Simulator
-  MOVES = {'L' => :turn_left,
-           'R' => :turn_right,
-           'A' => :advance }
+  MOVES = { 'L' => :turn_left,
+            'R' => :turn_right,
+            'A' => :advance }
 
   def initialize
     @grid = Hash.new([])

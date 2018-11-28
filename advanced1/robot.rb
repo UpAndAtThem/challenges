@@ -1,25 +1,21 @@
 # robot
-  # orient(:west)
-  # at(x,y)
-  # bearing
-  # turn_right
-  # turn_left
-  # advance
-  # coordinates
+# - orient(:west)
+# - at(x,y)
+# - bearing
+# - turn_right
+# - turn_left
+# - advance
+# - coordinates
 
 class Robot
-  TURNING = {north: {'turn_left' => :west, 'turn_right' => :east},
-             south: {'turn_left' => :east, 'turn_right' => :west},
-             east: {'turn_left' => :north, 'turn_right' => :south},
-             west: {'turn_left' => :south, 'turn_right' => :north}}
+  TURNING = { north: { 'turn_left' => :west, 'turn_right' => :east },
+              south: { 'turn_left' => :east, 'turn_right' => :west },
+              east:  { 'turn_left' => :north, 'turn_right' => :south },
+              west:  { 'turn_left' => :south, 'turn_right' => :north } }
 
   DIRECTIONS = [:north, :south, :east, :west]
 
   attr_accessor :bearing, :x, :y
-
-  def initialize
-
-  end
 
   def orient(direction)
     raise ArgumentError unless DIRECTIONS.include? direction
@@ -27,7 +23,7 @@ class Robot
   end
 
   def at(x, y)
-    raise ArgumentError unless [x, y].all? { |num| num.class == Integer}
+    raise ArgumentError unless [x, y].all? { |num| num.class == Integer }
     self.x = x
     self.y = y
   end
