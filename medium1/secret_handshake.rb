@@ -1,12 +1,13 @@
 class SecretHandshake
-  MOVES = {-1 => 'wink', -2 => 'double blink', -3 => 'close your eyes', -4 => 'jump'}
+  MOVES = { -1 => 'wink', -2 => 'double blink',
+            -3 => 'close your eyes', -4 => 'jump' }
   MIN_POSITION = -5
 
   def initialize(number)
-    @sequence = set_binary number
+    @sequence = to_binary number
   end
 
-  def set_binary(number)
+  def to_binary(number)
     number.class == String ? number : number.to_s(2)
   end
 
