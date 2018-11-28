@@ -1,6 +1,7 @@
 # split number string into individual integers
 # reverse split numbers
-# map over with index and multiply each digit with the coresponding power of 8 (index)
+# map over with index and multiply each digit
+#   with the coresponding power of 8 (index)
 # add numbers together
 
 class Octal
@@ -12,7 +13,7 @@ class Octal
 
   def mult_by_power_of_eight(collection)
     collection.map.with_index do |num, index|
-      num * (8 ** index)
+      num * (8**index)
     end
   end
 
