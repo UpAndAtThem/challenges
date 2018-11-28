@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/LineLength
+
 # Write a program that uses the Sieve of Eratosthenes to find all the primes from 2 up to a given number.
 
 # The Sieve of Eratosthenes is a simple, ancient algorithm for finding all prime numbers up to any given limit. It does so by iteratively marking as composite (i.e. not prime) the multiples of each prime, starting with the multiples of 2.
@@ -18,6 +20,8 @@
 # iterate by self over the remainder of the numbers and label each number as marked
 # if the number is not marked when it arrives at the number, push to primes array, and iterate by self marking each number it lands as marked.
 
+# rubocop:enable Metrics/LineLength
+
 class Sieve
   attr_reader :upper_bound, :prime_numbers, :range_hash
 
@@ -29,7 +33,7 @@ class Sieve
 
   def create_range_hash
     range = (2..upper_bound).to_a
-    empty_string = range.map { |elem| elem = ''}
+    empty_string = range.map { |_| '' }
 
     Hash[range.zip empty_string]
   end
@@ -45,15 +49,15 @@ class Sieve
   def marked?(mark_status)
     mark_status == 'marked'
   end
-  
+
   def label_all_composites(number)
-    ((number + number)..upper_bound).step(number) do |composite| 
+    ((number + number)..upper_bound).step(number) do |composite|
       range_hash[composite] = 'marked'
     end
   end
 
   def primes
-    range_hash.each_with_index do |(number, marker), index|
+    range_hash.each do |(number, marker)|
       next if marked? marker
       push_prime(number) if marker.empty?
       label_as_marked marker
