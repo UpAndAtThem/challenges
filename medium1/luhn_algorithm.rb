@@ -1,15 +1,6 @@
-# luhn is valid when:
-# => double every 2nd number starting at the right
-# => add all the numbers together
-# => if the sum is divisble by 10 it is valid
+# frozen_string_literal: true
 
-# valid
-
-# input
-#   number
-# output
-
-
+# Luhn class
 class Luhn
   attr_reader :number
 
@@ -19,7 +10,7 @@ class Luhn
 
   def subtract_nine(number)
     number = number.to_i * 2
-    number = number - 9 if number > 9
+    number -= 9 if number > 9
     number.to_s
   end
 
@@ -36,23 +27,17 @@ class Luhn
   end
 
   def self.create(number)
-    
-    place_holder = number.to_s.chars.push("0").join.to_i
+    place_holder = number * 10
     luhn = Luhn.new(place_holder)
 
-    if luhn.checksum % 10 == 0
-      return luhn.number
-    else
-      check_digit = ((luhn.checksum % 10) - 10).abs.to_s
+    return luhn.number if (luhn.checksum % 10).zero?
 
-      number.to_s.chars.push(check_digit).join.to_i
-    end
-      
-    
+    check_digit = ((luhn.checksum % 10) - 10).abs.to_s
+    number.to_s.chars.push(check_digit).join.to_i
   end
 
   def addends
-    reversed_array = number.to_s.split("").reverse
+    reversed_array = number.to_s.split('').reverse
     doubled_odd_numbers = double_odd_number_index(reversed_array)
     doubled_odd_numbers.reverse.map(&:to_i)
   end
@@ -62,7 +47,6 @@ class Luhn
   end
 
   def valid?
-    checksum % 10 == 0
+    (checksum % 10).zero?
   end
 end
-
