@@ -73,8 +73,7 @@ class Crypto
   end
 
   def plaintext_segments
-    split_message = normalized_message.chars.each_slice(size).to_a
-    split_message.map(&:join)
+    normalized_message.scan(/.{1,#{size}}/)
   end
 
   def normalize_ciphertext
