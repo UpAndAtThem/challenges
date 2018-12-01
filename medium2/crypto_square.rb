@@ -47,43 +47,61 @@
 # output
 #   encoded string
 
-# remove all spaces and punctuation from string
-# break down string into groups where each group length is the square root of the length of the total string.  if not perfect square use next square where there is a space remained in the square.
-# iterate over all the grouped words length of the grouped word times and shift each string and push onto a new string grouping (basically transposing)
-require 'pry'
+# find number of columns by taking the square root of the length and calling ceil (will round up unless the number ends with .0)
+
+# break the string down in segments stored in arrays in an array of the number above. [[],[],[]]
+
+# unless sqrt(str.size) % 1 == 0, push (sqrt(str).ceil - sub_str.lentgh) numbers of space characters on the last array.  transpose. delete the space chars, join with spaces.
+# otherwise transpose the array of arrays, join with spaces
+
+include Math
 
 class Crypto
+  attr_accessor :message, :normalized_message
+
   def initialize(str)
     @message = str
     normalize_plaintext
   end
 
-  def size
-    square_root = Math.sqrt @message.size
-
-    if square_root % 1 == 0
-      square_root.to_i
-    else
-      (square_root + 1).to_i
-    end
+  def normalize_plaintext
+    self.normalized_message = message.downcase.gsub(/[^a-z0-9]/, "")
   end
 
-  def normalize_plaintext
-    @message = @message.gsub(/[^A-Za-z0-9]/, "").downcase
+  def size
+    sqrt(normalized_message.size).ceil
   end
 
   def plaintext_segments
-    binding.pry
-    @message.scan(/[A-Za-z0-9]{1,#{size}}/)
-  end
-
-  def ciphertext
-
+    split_message = normalized_message.chars.each_slice(size).to_a
+    split_message.map(&:join)
   end
 
   def normalize_ciphertext
+    segments = plaintext_segments
 
+    if sqrt(normalized_message.size) % 1 == 0
+      segments.map { |word| word.split"" }.transpose
+    else
+      (sqrt(normalized_message.size).ceil - segments[-1].size).times { |_| segments[-1] << " " }
+      transposed = segments.map { |word| word.split"" }.transpose
+
+      words_minus_spaces = transposed.map do |seg_chars| 
+
+        if seg_chars.include?(" ")
+          seg_chars.delete(" ")
+          seg_chars.join
+        else
+          seg_chars.join
+        end
+      end
+
+      words_minus_spaces.join" "
+    end
+  end
+
+  def ciphertext
+    normalize_ciphertext.split.join
   end
 end
-
 
