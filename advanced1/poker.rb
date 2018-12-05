@@ -18,6 +18,9 @@ class Poker
   CHECK_RANKS = [:royal_flush?, :straight_flush?, :four_of_a_kind?, :full_house?,
                  :flush?, :straight?, :three_of_a_kind?, :two_pair?, :one_pair?]
 
+  DESCENDING_RANKS = [:royal_flush, :straight_flush, :four_of_a_kind, :full_house,
+                 :flush, :straight, :three_of_a_kind, :two_pair, :one_pair, :high_card]
+
   ALL_STRAIGHTS = %w(A 2 3 4 5 6 7 8 9 10 J Q K A).each_cons(5).to_a
 
   def initialize(poker_hands)
@@ -99,8 +102,29 @@ class Poker
     end
   end
 
+  def highest_rank_hands(rank_and_position)
+    DESCENDING_RANKS.each do |test_rank|
+      matches = rank_and_position.select { |rank, position| rank.to_sym == test_rank}
+
+      return matches unless matches.empty?
+    end
+  end
+
+  def tie_breaker(hands)
+    binding.pry
+  end
+
   def best_hand
     hand_ranks = assign_rank
-    binding.pry
+
+    rank_and_position = hand_ranks.map.with_index do |current_rank, index|
+      [current_rank, index]
+    end
+    
+    best_rank_and_index = highest_rank_hands(rank_and_position)
+    best_indexes = best_rank_and_index.map { |rank, index| index}
+    best_hands = hands.select.with_index { |hand, index| best_indexes.include? index}
+    
+    best_hands.size == 1 ? best_hands : tie_breaker(best_hands)
   end
 end
